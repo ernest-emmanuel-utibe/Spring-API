@@ -38,7 +38,7 @@ services:
     restart: on-failure
 
 networks:
-  periodapp_web_net:
+  springapi_web_net:
     driver: bridge
 
 volumes:
