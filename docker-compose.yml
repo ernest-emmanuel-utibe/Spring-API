@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  mysql:
+    container_name: mysql_db
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: oluwatosin
+      MYSQL_DATABASE: devOpsProject
+      MYSQL_USER: root
+      MYSQL_PASSWORD: oluwatosin
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - periodapp_web_net
+    restart: on-failure
+
+  app:
+    build: .
+    image: joshrichhy/devopsproject
+    ports:
+      - "8890:8890"
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/devOpsProject
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: oluwatosin
+      PORT: "8890"
+    depends_on:
+      - mysql
+    networks:
+      - periodapp_web_net
+    volumes:
+      - .:/usr/src/app
+    restart: on-failure:3
+
+networks:
+  periodapp_web_net:
+    driver: bridge
+
+volumes:
+  mysql_data:
