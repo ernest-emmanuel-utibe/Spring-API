@@ -35,7 +35,7 @@ services:
       - springapi_web_net
     volumes:
       - .:/usr/src/app
-    restart: on-failure:3
+    restart: on-failure
 
 networks:
   periodapp_web_net:
