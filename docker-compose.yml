@@ -5,34 +5,34 @@ services:
     container_name: mysql_db
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: oluwatosin
-      MYSQL_DATABASE: devOpsProject
+      MYSQL_ROOT_PASSWORD: Nathanjames12345_*
+      MYSQL_DATABASE: springapidb
       MYSQL_USER: root
-      MYSQL_PASSWORD: oluwatosin
+      MYSQL_PASSWORD: Nathanjames12345_*
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
-      - periodapp_web_net
+      - springapi_web_net
     restart: on-failure
 
   app:
     build: .
-    image: joshrichhy/devopsproject
+    image: morsecodes/springapi
     ports:
-      - "8890:8890"
+      - "8080:8080"
     env_file:
       - .env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/devOpsProject
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/springai
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: oluwatosin
+      SPRING_DATASOURCE_PASSWORD: Nathanjames12345_*
       PORT: "8890"
     depends_on:
       - mysql
     networks:
-      - periodapp_web_net
+      - springapi_web_net
     volumes:
       - .:/usr/src/app
     restart: on-failure:3
