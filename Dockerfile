@@ -8,7 +8,7 @@
 #ENTRYPOINT ["java", "-jar", "springapi.jar"]
 
 # Use the official OpenJDK base image for Java 11
-FROM openjdk:11-jre-slim
+FROM openjdk:17-jre-slim
 
 # Set the working directory inside the container
 WORKDIR /app

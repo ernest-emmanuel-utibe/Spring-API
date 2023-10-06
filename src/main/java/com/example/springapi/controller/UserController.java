@@ -23,9 +23,10 @@ public class UserController {
         return new ResponseEntity<>(userService.registerAUsers(user), HttpStatus.CREATED);
     }
 
-    @GetMapping("/get-users-by-id")
-    public Optional<User> getAllRegisteredUsersById(@RequestParam Long userId) {
-        return userService.findUserById(userId);
+    @GetMapping("/get-users-by-id/{id}")
+    public Optional<User> getAllRegisteredUsersById(@PathVariable("id") Long userId) {
+        Optional<User> user = userService.findUserById(userId);
+        return Optional.ofNullable(user.orElseThrow(() -> new RuntimeException("User not found")));
     }
 
 //    @GetMapping("/user")
