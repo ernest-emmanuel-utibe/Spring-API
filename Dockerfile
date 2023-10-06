@@ -17,7 +17,7 @@ WORKDIR /app
 COPY target/springapi-0.0.1-SNAPSHOT.jar /app/springapi.jar
 
 # Expose the port your application will run on
-EXPOSE 8081
+EXPOSE 8080
 
 # Command to run the application
 CMD ["java", "-jar", "your-spring-boot-app.jar"]

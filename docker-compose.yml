@@ -5,37 +5,40 @@ services:
     container_name: mysql_db
     image: mysql:latest
     environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
       MYSQL_ROOT_PASSWORD: Nathanjames12345_*
       MYSQL_DATABASE: springapidb
-      MYSQL_USER: root
-      MYSQL_PASSWORD: Nathanjames12345_*
+
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3306:3306"  # Change the host port to avoid conflicts
     networks:
       - springapi_web_net
     restart: on-failure
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: morsecodes/springapi
     ports:
-      - "8081:8081"
+      - "8080:8080"
     env_file:
       - .env
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/springai
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/springapidb
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Nathanjames12345_*
-      PORT: "8081"
+      PORT: "8080"
     depends_on:
       - mysql
     networks:
       - springapi_web_net
     volumes:
       - .:/usr/src/app
-    restart: on-failure
+    restart: on-failure:3
 
 networks:
   springapi_web_net:
@@ -43,3 +46,62 @@ networks:
 
 volumes:
   mysql_data:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#version: "3.8"
+#
+#services:
+#  mysql:
+#    container_name: mysql_db
+#    image: mysql:latest
+#    environment:
+#      MYSQL_ROOT_PASSWORD: Nathanjames12345_*
+#      MYSQL_DATABASE: springapidb
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: Nathanjames12345_*
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#    ports:
+#      - "3306:3306"
+#    networks:
+#      - springapi_web_net
+#    restart: on-failure
+#
+#  app:
+#    build: .
+#    image: morsecodes/springapi
+#    ports:
+#      - "8081:8081"
+#    env_file:
+#      - .env
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/springai
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: Nathanjames12345_*
+#      PORT: "8081"
+#    depends_on:
+#      - mysql
+#    networks:
+#      - springapi_web_net
+#    volumes:
+#      - .:/usr/src/app
+#    restart: on-failure
+#
+#networks:
+#  springapi_web_net:
+#    driver: bridge
+#
+#volumes:
+#  mysql_data:

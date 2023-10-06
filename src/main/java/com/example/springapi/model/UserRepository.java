@@ -1,6 +1,6 @@
-//package com.example.springapi.model;
-//
-//import org.springframework.data.jpa.repository.JpaRepository;
-//
-//public interface UserRepository extends JpaRepository<User, Long> {
-//}
+package com.example.springapi.model;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+}
