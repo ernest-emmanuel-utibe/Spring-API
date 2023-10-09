@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mysql:
-    container_name: mysql_db
+    container_name: mysql_db_new
     image: mysql:latest
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
@@ -38,7 +38,6 @@ services:
       - springapi_web_net
     volumes:
       - .:/usr/src/app
-    restart: on-failure:3
 
 networks:
   springapi_web_net:
