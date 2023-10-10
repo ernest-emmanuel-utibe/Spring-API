@@ -1,6 +1,8 @@
 package com.example.springapi.controller;
 
 import com.example.springapi.model.User;
+import com.example.springapi.request.UserRequest;
+import com.example.springapi.response.UserResponse;
 import com.example.springapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,27 +21,31 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register-users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return new ResponseEntity<>(userService.registerAUsers(user), HttpStatus.CREATED);
+    public ResponseEntity<User> createUser(@RequestBody User user)
+    {
+        return new ResponseEntity<>(userService.registerUsers(user), HttpStatus.CREATED);
     }
 
     @GetMapping("/get-users-by-id/{id}")
-    public Optional<User> getAllRegisteredUsersById(@PathVariable("id") Long userId) {
+    public Optional<User> findAllRegisteredUsersById(@PathVariable("id") Long userId)
+    {
         Optional<User> user = userService.findUserById(userId);
         return Optional.ofNullable(user.orElseThrow(() -> new RuntimeException("User not found")));
     }
 
-//    @GetMapping("/user")
-//    public Optional<User> getAllRegisteredUsersById(@RequestParam User userId) {
-//        Optional<User> user = userService.findUserById(userId);
-//        return user.orElseThrow(() -> new RuntimeException("User not found"));
-//        return user;
-//    }
+    @PutMapping("users/{id}/update")
+    public ResponseEntity<UserResponse> updatePokemon(@RequestBody UserRequest userRequest, @PathVariable("id") Long userId)
+    {
+        UserResponse response = userService.usersUpdatingTheirProfileById(userRequest, userId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
-//    @GetMapping("/api/user/{id}")
-//    @ResponseBody
-//    public String displayUserId(@PathVariable("id") String id) {
-//        return "The user id is " + id;
-//    }
+    @GetMapping("/get-all-user")
+    public ResponseEntity<UserResponse> getAllRegisteredUsers(@RequestMapping UserRequest userRequest,
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize)
+    {
+
+    }
 }
 
