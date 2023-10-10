@@ -1,45 +1,101 @@
-version: "3.8"
-
+version: '3'
 services:
+  # MySQL Database Container
   mysql:
-    container_name: mysql_db
     image: mysql:latest
+    container_name: mysql-container
     environment:
       MYSQL_ROOT_PASSWORD: Nathanjames12345_*
-      MYSQL_DATABASE: springapidb
+      MYSQL_DATABASE: spring-api-db
       MYSQL_USER: root
       MYSQL_PASSWORD: Nathanjames12345_*
-    volumes:
-      - mysql_data:/var/lib/mysql
     ports:
-      - "3000:3306"
-    networks:
-      - springapi_web_net
-    restart: on-failure
+      - "3306:3306" # Expose MySQL port
 
-  app:
-    build: .
-    image: morsecodes/springapi
+  # Spring Boot Application Container
+  spring-app:
+    build: ./target/springapi.0.0.1-SNAPSHOT.jar
+    container_name: spring-app-container
     ports:
-      - "8000:8080"
-    env_file:
-      - .env
+      - "8080:8080" # Expose your Spring Boot app's port
+    depends_on:
+      - mysql # Ensure that the MySQL container is started first
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/springai
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/spring-api-db
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Nathanjames12345_*
-      PORT: "8080"
-    depends_on:
-      - mysql
-    networks:
-      - springapi_web_net
-    volumes:
-      - .:/usr/src/app
-    restart: on-failure:3
 
-networks:
-  springapi_web_net:
-    driver: bridge
 
-volumes:
-  mysql_data:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#version: "3.8"
+#
+#services:
+#  mysql:
+#    container_name: mysql_db
+#    image: mysql:latest
+#    environment:
+#      MYSQL_ROOT_PASSWORD: Nathanjames12345_*
+#      MYSQL_DATABASE: springapidb
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: Nathanjames12345_*
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#    ports:
+#      - "3000:3306"
+#    networks:
+#      - springapi_web_net
+#    restart: on-failure
+#
+#  app:
+#    build: .
+#    image: morsecodes/springapi
+#    ports:
+#      - "8000:8080"
+#    env_file:
+#      - .env
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/springai
+#      SPRING_DATASOURCE_USERNAME: root
+#      SPRING_DATASOURCE_PASSWORD: Nathanjames12345_*
+#      PORT: "8080"
+#    depends_on:
+#      - mysql
+#    networks:
+#      - springapi_web_net
+#    volumes:
+#      - .:/usr/src/app
+#    restart: on-failure:3
+#
+#networks:
+#  springapi_web_net:
+#    driver: bridge
+#
+#volumes:
+#  mysql_data:
