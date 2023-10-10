@@ -1,0 +1,6 @@
+com\example\springapi\model\Item.class
+com\example\springapi\service\ItemService.class
+com\example\springapi\SpringapiApplication.class
+com\example\springapi\service\impl\ItemServiceImpl.class
+com\example\springapi\controller\ItemController.class
+com\example\springapi\repository\ItemRepository.class
