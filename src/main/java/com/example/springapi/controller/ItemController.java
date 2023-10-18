@@ -12,7 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemController {
 
-//    @Autowired
     private final ItemService itemService;
 
     @GetMapping
