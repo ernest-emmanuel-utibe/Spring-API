@@ -4,7 +4,6 @@ import com.example.springapi.model.Item;
 import com.example.springapi.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -21,6 +20,7 @@ public class ItemController {
     {
         return itemService.getAllItems();
     }
+    
 
     @GetMapping("/{id}")
     public Item getItemById(@PathVariable Long id) {
